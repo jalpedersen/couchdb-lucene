@@ -27,6 +27,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +53,7 @@ import com.github.rnewson.couchdb.lucene.util.ServletUtils;
 
 import static com.github.rnewson.couchdb.lucene.util.ServletUtils.getUri;
 
-public final class LuceneServlet extends HttpServlet {
+public final class LuceneServlet extends HttpServlet implements ServletContextListener {
 
 	private static final Logger LOG = Logger.getLogger(LuceneServlet.class);
 
@@ -182,7 +184,6 @@ public final class LuceneServlet extends HttpServlet {
 		         threads.put(database, thread);
 			}
 		}
-
 		return result;
 	}
 
@@ -268,4 +269,11 @@ public final class LuceneServlet extends HttpServlet {
     }
 
 
+    public void contextInitialized(ServletContextEvent sce) {
+    }
+    public void contextDestroyed(ServletContextEvent sce) {
+        for (DatabaseIndexer indexer: indexers.values()) {
+            indexer.stop();
+        }
+    }
 }

@@ -499,6 +499,12 @@ public final class DatabaseIndexer implements Runnable, ResponseHandler<Void> {
 		}
 	}
 
+	public void stop() {
+	    if (req != null) {
+	        req.abort();
+	    }
+	    close();
+	}
 	public void search(final HttpServletRequest req,
 			final HttpServletResponse resp) throws IOException, JSONException {
 		final IndexState state = getState(req, resp);

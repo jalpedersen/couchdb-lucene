@@ -37,4 +37,7 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
+  <listener>
+    <listener-class>com.github.rnewson.couchdb.lucene.LuceneServlet</listener-class>
+  </listener>
 </web-app>
